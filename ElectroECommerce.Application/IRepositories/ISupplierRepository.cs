@@ -2,8 +2,7 @@
 
 namespace ElectroECommerce.Application.IRepositories
 {
-    public interface IProductRepository : IGenericRepository<Product>
+    public interface ISupplierRepository : IGenericRepository<Supplier>
     {
-
     }
 }
