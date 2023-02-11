@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ElectroECommerce.Api.Controllers
 {
     [ApiController]
-    [Route("api/product")]
+    [Route("api/products")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -19,7 +19,7 @@ namespace ElectroECommerce.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("products")]
+        [Route("")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsAsync()
         {
             var result = await _productService.GetProductsAsync();
@@ -31,7 +31,7 @@ namespace ElectroECommerce.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("products/{id:int}")]
+        [Route("{id:int}")]
         public async Task<ActionResult<Product>> GetProductByIdAsync(int id)
         {
             var result = await _productService.GetProductByIdAsync(id);
@@ -39,7 +39,7 @@ namespace ElectroECommerce.Api.Controllers
         }
 
         [HttpPost]
-        [Route("products")]
+        [Route("")]
         public async Task<ActionResult<Product>> CreateProductAsync(Product product)
         {
             var result = await _productService.CreateProductAsync(product);
@@ -47,7 +47,7 @@ namespace ElectroECommerce.Api.Controllers
         }
 
         [HttpPut]
-        [Route("products/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<Product>> UpdateProductAsync(Product product)
         {
             var result = await _productService.UpdateProductAsync(product);
@@ -55,7 +55,7 @@ namespace ElectroECommerce.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("products/{id:int}")]
+        [Route("{id:int}")]
         public async Task<ActionResult> DeleteProductAsync(int id)
         {
             try
