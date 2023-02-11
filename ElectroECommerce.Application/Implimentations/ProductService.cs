@@ -18,12 +18,12 @@ namespace ElectroECommerce.Application.Implimentations
         /// <returns></returns>
         public async Task<IEnumerable<Product>> GetProductsAsync()
         {
-            return await _productRepository.GetProductsAsync();
+            return await _productRepository.GetAllAsync();
         }
 
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            return await _productRepository.GetProductByIdAsync(id);
+            return await _productRepository.GetAsync(id);
         }
 
         public async Task<Product> UpdateProductAsync(Product product)
@@ -33,7 +33,7 @@ namespace ElectroECommerce.Application.Implimentations
             {
                 return null;
             }
-            return await _productRepository.UpdateProductAsync(product);
+            return await _productRepository.UpdateAsync(product);
         }
 
         public async Task<Product> CreateProductAsync(Product product)
@@ -43,12 +43,14 @@ namespace ElectroECommerce.Application.Implimentations
             {
                 return null;
             }
-            return await _productRepository.CreateProductAsync(product);
+            return await _productRepository.CreateAsync(product);
         }
 
         public async Task DeleteProductAsync(int id)
         {
-            await _productRepository.DeleteProductAsync(id);
+            var product = await _productRepository.GetAsync(id);
+            if(product != null)
+                await _productRepository.DeleteAsync(product);
         }
 
 

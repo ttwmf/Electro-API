@@ -3,9 +3,9 @@ using ElectroECommerce.Domain;
 
 namespace ElectroECommerce.Infrastructure.Repositories
 {
-    public class ProductRepository : GenericRepository<Product>, IProductRepository
+    public class SupplierRepository : GenericRepository<Supplier>, ISupplierRepository
     {
-        public ProductRepository(AppDbContext context) : base(context)
+        public SupplierRepository(AppDbContext context) : base(context)
         {
 
         }
