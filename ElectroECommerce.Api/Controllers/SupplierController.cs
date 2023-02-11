@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ElectroECommerce.Api.Controllers
 {
     [ApiController]
-    [Route("supplier")]
+    [Route("api/suppliers")]
     public class SupplierController : ControllerBase
     {
         private readonly ISupplierService _supplierService;
@@ -15,7 +15,7 @@ namespace ElectroECommerce.Api.Controllers
         }
 
         [HttpPost]
-        [Route("suppliers")]
+        [Route("")]
         public async Task<ActionResult<Supplier>> CreateAsync(Supplier supplier)
         {
             var result = await _supplierService.CreateSupplierAsync(supplier);
