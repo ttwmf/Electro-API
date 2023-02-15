@@ -9,7 +9,6 @@ namespace ElectroECommerce.Application.IRepositories
         Task DeleteAsync(T entity);
         Task<T> GetAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();
-
         Task SaveAsync();
     }
 }
