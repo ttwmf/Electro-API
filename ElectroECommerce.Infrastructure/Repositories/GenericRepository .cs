@@ -47,10 +47,18 @@ namespace ElectroECommerce.Infrastructure.Repositories
             return await _entity.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            if (entity == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+            entity.UpdatedAt = DateTime.Now;
+            _entity.Update(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
+
 
         public async Task SaveAsync()
         {
