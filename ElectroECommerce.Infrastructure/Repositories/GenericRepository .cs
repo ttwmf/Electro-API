@@ -2,6 +2,7 @@
 using ElectroECommerce.Application.IRepositories;
 using ElectroECommerce.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace ElectroECommerce.Infrastructure.Repositories
 {
@@ -22,6 +23,8 @@ namespace ElectroECommerce.Infrastructure.Repositories
             {
                 throw new ArgumentNullException("entity");
             }
+            entity.CreatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
             _entity.Add(entity);
             await _context.SaveChangesAsync();
             return entity;
@@ -47,7 +50,7 @@ namespace ElectroECommerce.Infrastructure.Repositories
             return await _entity.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<T> UpdateAsync(T entity)
+         public async Task<T> UpdateAsync(T entity)
         {
             if (entity == null)
             {
