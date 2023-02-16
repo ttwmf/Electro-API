@@ -18,40 +18,84 @@ namespace ElectroECommerce.Api.Controllers
         [Route("")]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomersAsync()
         {
-            var result = await _customerService.GetCustomersAsync();
-            return Ok(result);
+            try
+            {
+                var result = await _customerService.GetCustomersAsync();
+                return Ok(result);
+            }
+            catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from server");
+            }
         }
 
         [HttpGet]
         [Route("{id:int}")]
         public async Task<ActionResult<Customer>> GetCustomerByIdAsync(int id)
         {
-            var result = await _customerService.GetCustomerByIdAsync(id);
-            return Ok(result);
+            try
+            {
+                var result = await _customerService.GetCustomerByIdAsync(id);
+                if (result == null)
+                    return NotFound("Customer no existed");
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from server");
+            }
         }
 
         [HttpPost]
         [Route("")]
         public async Task<ActionResult<Customer>> CreateCustomerAsync(Customer customer)
         {
-            var result = await _customerService.CreateCustomerAsync(customer);
-            return Ok(result);
+            try
+            {
+                var result = await _customerService.CreateCustomerAsync(customer);
+                if (result == null)
+                    return BadRequest("Object customer is null");
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from server");
+            }
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult<Customer>> UpdateProductAsync(Customer customer)
+        public async Task<ActionResult<Customer>> UpdateCustomerAsync(int id,Customer customer)
         {
-            var result = await _customerService.CreateCustomerAsync(customer);
-            return Ok(result);
+            try
+            {
+                Customer customerIsvalid = await _customerService.GetCustomerByIdAsync(id);
+                if (customerIsvalid == null)
+                {
+                    return BadRequest("Id = " + id + " not found in Database");
+                }
+                else
+                {
+                    customer.Id = customerIsvalid.Id;
+                    var result = await _customerService.UpdateCustomerAsync(customer);
+                    return Ok(result);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from server");
+            }
         }
 
-        [HttpDelete]
+            [HttpDelete]
         [Route("{id:int}")]
         public async Task<ActionResult> DeleteCustomerAsync(int id)
         {
             try
             {
+                var cusValid = await GetCustomerByIdAsync(id);
+                if (cusValid == null)
+                    return NotFound("Customer no existed");
                 await _customerService.DeleteCustomerAsync(id);
                 return Ok();
             }
