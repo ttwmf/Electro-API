@@ -10,5 +10,6 @@ namespace ElectroECommerce.Domain
     {
         public string ImageName { get; set; }
         public string ImageUrl { get; set; }
+        public string Tmp { get; set; }
     }
 }
