@@ -14,6 +14,9 @@ namespace ElectroECommerce.Domain
 
         public decimal TotalAmount { get; set; }
 
+        /// <summary>
+        /// Total item in the Order
+        /// </summary>
         public int TotalItem { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }
