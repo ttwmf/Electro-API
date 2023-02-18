@@ -1,4 +1,5 @@
-﻿using ElectroECommerce.Domain;
+﻿using ElectroECommerce.Application.Models.Request;
+using ElectroECommerce.Domain;
 
 namespace ElectroECommerce.Application.Contracts
 {
@@ -6,9 +7,9 @@ namespace ElectroECommerce.Application.Contracts
     {
         Task<Image> GetImageByIdAsync(int id);
 
-        Task<Image> CreateImageAsync(Image image);
+        Task<Image> CreateImageAsync(CreateImageRequest image);
 
-        Task<Image> UpdateImageAsync(Image image);
+        Task<Image> UpdateImageAsync(int id ,UpdateImageRequest image);
 
         Task DeleteImageAsync(int id);
     }
