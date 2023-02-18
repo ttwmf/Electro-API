@@ -1,5 +1,6 @@
 ﻿using ElectroECommerce.Application.Contracts;
 using ElectroECommerce.Application.IRepositories;
+using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
 
 namespace ElectroECommerce.Application.Implimentations
@@ -11,9 +12,22 @@ namespace ElectroECommerce.Application.Implimentations
         {
             _supplierRepository = supplierRepository;
         }
-        public async Task<Supplier> CreateSupplierAsync(Supplier supplier)
+        public async Task<Supplier> CreateSupplierAsync(CreateSupplierRequest supplier)
         {
-            return await _supplierRepository.CreateAsync(supplier);
+            var newSupplier = new Supplier()
+            {
+                Address = supplier.Address,
+                PhoneNumber = supplier.PhoneNumber,
+                SupplierName = supplier.SupplierName,
+                Email = supplier.Email,
+
+                //TODO 
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.Now,
+                CreatedBy = "Thai",
+                Status = 0
+            };
+            return await _supplierRepository.CreateAsync(newSupplier);
         }
 
         public async Task DeleteSupplierAsync(int id)
@@ -37,6 +51,7 @@ namespace ElectroECommerce.Application.Implimentations
 
         public async Task<Supplier> UpdateSupplierAsync(Supplier supplier)
         {
+
             return await _supplierRepository.UpdateAsync(supplier);
         }
     }

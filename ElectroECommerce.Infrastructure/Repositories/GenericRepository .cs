@@ -23,8 +23,6 @@ namespace ElectroECommerce.Infrastructure.Repositories
             {
                 throw new ArgumentNullException("entity");
             }
-            entity.CreatedAt = DateTime.Now;
-            entity.UpdatedAt = DateTime.Now;
             _entity.Add(entity);
             await _context.SaveChangesAsync();
             return entity;
@@ -56,7 +54,6 @@ namespace ElectroECommerce.Infrastructure.Repositories
             {
                 throw new ArgumentNullException("entity");
             }
-            entity.UpdatedAt = DateTime.Now;
             _entity.Update(entity);
             await _context.SaveChangesAsync();
             return entity;
