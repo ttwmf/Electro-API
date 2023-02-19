@@ -1,5 +1,6 @@
 ﻿using ElectroECommerce.Application.Contracts;
 using ElectroECommerce.Application.IRepositories;
+using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
 
 namespace ElectroECommerce.Application.Implimentations
@@ -16,28 +17,36 @@ namespace ElectroECommerce.Application.Implimentations
             return await _imageRepository.GetAsync(id);
         }
 
-        public async Task<Image> CreateImageAsync(Image image)
+        public async Task<Image> CreateImageAsync(CreateImageRequest image)
         {
-            if (image == null)
+            var newImage = new Image()
             {
-                return null;
-            }
-            return await _imageRepository.CreateAsync(image);
+                ImageName = image.ImageName,
+                ImageUrl = image.ImageUrl,
+
+                //TODO 
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                CreatedBy = "Tuan",
+                UpdatedBy = "Tuan",
+                Status = 0
+            };
+            return await _imageRepository.CreateAsync(newImage);
         }
 
-        public async Task<Image> UpdateImageAsync(Image image)
+        public async Task<Image> UpdateImageAsync(int id, UpdateImageRequest image)
         {
             if (image != null)
-            {   
-                var imageUpdate = await GetImageByIdAsync(image.Id);
-                if (imageUpdate != null)
+            {
+                var updateImage = await GetImageByIdAsync(id);
+                if (updateImage != null)
                 {
-                    imageUpdate.ImageName = image.ImageName;
-                    imageUpdate.ImageUrl = image.ImageUrl;
-                    imageUpdate.CreatedBy = image.CreatedBy;
-                    imageUpdate.UpdatedBy = image.UpdatedBy;
-                    imageUpdate.Status = image.Status;
-                    return await _imageRepository.UpdateAsync(imageUpdate);
+                    updateImage.ImageName = image.ImageName;
+                    updateImage.ImageUrl = image.ImageUrl;
+                    updateImage.UpdatedAt = DateTime.UtcNow;
+                    updateImage.UpdatedBy = "Tuan";
+                    updateImage.Status = image.Status;
+                    return await _imageRepository.UpdateAsync(updateImage);
                 }
             }
             return null;

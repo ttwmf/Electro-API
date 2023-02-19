@@ -1,5 +1,6 @@
 ﻿
 using ElectroECommerce.Application.Contracts;
+using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +33,7 @@ namespace ElectroECommerce.Api.Controllers
         }
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<Image>> CreateImageAsync(Image image)
+        public async Task<ActionResult<Image>> CreateImageAsync(CreateImageRequest image)
         {
             try
             {
@@ -49,7 +50,7 @@ namespace ElectroECommerce.Api.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult<Image>> UpdateImageAsync(int id, Image image)
+        public async Task<ActionResult<Image>> UpdateImageAsync(int id, UpdateImageRequest image)
         {
             try
             {
@@ -60,8 +61,7 @@ namespace ElectroECommerce.Api.Controllers
                 }
                 else
                 {
-                    image.Id= imageIsvalid.Id;
-                    var result = await _imageService.UpdateImageAsync(image);
+                    var result = await _imageService.UpdateImageAsync(id, image);
                     return Ok(result);
                 }
 
