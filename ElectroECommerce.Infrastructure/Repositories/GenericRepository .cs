@@ -2,14 +2,13 @@
 using ElectroECommerce.Application.IRepositories;
 using ElectroECommerce.Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace ElectroECommerce.Infrastructure.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        private readonly AppDbContext _context;
-        private DbSet<T> _entity;
+        protected readonly AppDbContext _context;
+        protected DbSet<T> _entity;
 
         public GenericRepository(AppDbContext context)
         {
@@ -17,7 +16,7 @@ namespace ElectroECommerce.Infrastructure.Repositories
             _entity = _context.Set<T>();
         }
 
-        public async Task<T> CreateAsync(T entity)
+        public virtual async Task<T> CreateAsync(T entity)
         {
             if (entity == null)
             {
@@ -28,7 +27,7 @@ namespace ElectroECommerce.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task DeleteAsync(T entity)
+        public virtual async Task DeleteAsync(T entity)
         {
             if (entity == null)
             {
@@ -43,22 +42,15 @@ namespace ElectroECommerce.Infrastructure.Repositories
             return await _entity.ToListAsync();
         }
 
-        public async Task<T> GetAsync(int id)
+        public virtual async Task<T> GetAsync(int id)
         {
             return await _entity.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-         public async Task<T> UpdateAsync(T entity)
+        public virtual Task<T> UpdateAsync(T entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-            _entity.Update(entity);
-            await _context.SaveChangesAsync();
-            return entity;
+            throw new NotImplementedException();
         }
-
 
         public async Task SaveAsync()
         {

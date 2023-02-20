@@ -8,17 +8,21 @@ namespace ElectroECommerce.Domain
 {
     public class Order : BaseEntity
     {
-        public string OrderCode { get; set; }
-        
-        public Customer Customer { get; set; }
-
-        public decimal TotalAmount { get; set; }
+        public int CustomerId { get; set; }
+        public string ShippingAddres { get; set; }
+        public decimal ShippingCost { get; set; }
+        public int PaymentMethod { get; set; }
+        public int TotalItems { get; set; }
+        public decimal TotalPrice { get; set; }
+        public decimal TotalDiscount { get; set; }
+        public string VoucherCode { get; set; }
 
         /// <summary>
-        /// Total item in the Order
+        /// Customer navigation property
         /// </summary>
-        public int TotalItem { get; set; }
+        public Customer Customer { get; set; }
 
-        public List<OrderDetail> OrderDetails { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+
     }
 }
