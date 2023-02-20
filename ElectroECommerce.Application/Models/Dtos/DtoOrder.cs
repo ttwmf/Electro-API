@@ -1,6 +1,6 @@
-﻿namespace ElectroECommerce.Domain
+﻿namespace ElectroECommerce.Application.Models.Dtos
 {
-    public class Order : BaseEntity
+    public class DtoOrder : DtoBase
     {
         public string OrderCode { get; set; }
         public int CustomerId { get; set; }
@@ -15,9 +15,8 @@
         /// <summary>
         /// Customer navigation property
         /// </summary>
-        public Customer Customer { get; set; }
+        public DtoCustomer Customer { get; set; }
 
-        public ICollection<OrderDetail> OrderDetails { get; set; }
-
+        public ICollection<DtoOrderDetail> OrderDetails { get; set; }
     }
 }

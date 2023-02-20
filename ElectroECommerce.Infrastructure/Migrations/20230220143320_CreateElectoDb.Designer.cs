@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectroECommerce.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230220130254_CreateElectroDb")]
-    partial class CreateElectroDb
+    [Migration("20230220143320_CreateElectoDb")]
+    partial class CreateElectoDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -186,6 +186,9 @@ namespace ElectroECommerce.Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("OrderCode")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
@@ -220,6 +223,10 @@ namespace ElectroECommerce.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
+                    b.HasIndex("OrderCode")
+                        .IsUnique()
+                        .HasFilter("[OrderCode] IS NOT NULL");
+
                     b.ToTable("Orders");
 
                     b.HasData(
@@ -228,6 +235,7 @@ namespace ElectroECommerce.Infrastructure.Migrations
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerId = 1,
+                            OrderCode = "ABC-123",
                             PaymentMethod = 1,
                             ShippingAddres = "06 Trần Văn Ơn",
                             ShippingCost = 0m,

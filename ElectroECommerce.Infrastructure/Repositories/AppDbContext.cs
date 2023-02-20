@@ -34,16 +34,18 @@ namespace ElectroECommerce.Infrastructure.Repositories
                                     .HasOne<Product>(o => o.Product)
                                     .WithMany(p => p.OrderDetails)
                                     .HasForeignKey(o => o.ProductId);*/
+
+            // fluent api
+            modelBuilder.Entity<Order>()
+                        .HasIndex(o => o.OrderCode)
+                        .IsUnique();
+
             SeedData(modelBuilder);
         }
 
         private void SeedData(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Supplier>()
-                        .HasData(
-                        new Supplier { Id = 1, SupplierName = "Asus Việt Nam", Address = "482 Điện Biên Phủ, Q10, HCM", PhoneNumber = "0967823093", Email = "asusvn@gmail.com" }
-                );
-
+            SeedDataSupplier(modelBuilder);
             modelBuilder.Entity<Specifications>()
                         .HasData(
                         new Specifications { Id = 1, CPU = "Intel Core i9 5600Hz", RAM = "32 GB", Storage = "SSD 512 GB", MonitorSize = "14.1 Inch", VGA = "GTX 650 Ti", Weight = "1.57 Kg" },
@@ -84,13 +86,21 @@ namespace ElectroECommerce.Infrastructure.Repositories
                 );
 
             modelBuilder.Entity<Order>().HasData(
-                        new Order { Id = 1, CustomerId = 1, ShippingAddres = "06 Trần Văn Ơn", ShippingCost = 0, PaymentMethod = 1, TotalItems = 3, TotalDiscount = 0, TotalPrice = 335000, VoucherCode = "Free-ship" }
+                        new Order { Id = 1, OrderCode = "ABC-123", CustomerId = 1, ShippingAddres = "06 Trần Văn Ơn", ShippingCost = 0, PaymentMethod = 1, TotalItems = 3, TotalDiscount = 0, TotalPrice = 335000, VoucherCode = "Free-ship" }
                 );
 
             modelBuilder.Entity<OrderDetail>().HasData(
                         new OrderDetail { Id = 1, OrderId = 1, ProductId = 1, Quantity = 1 },
                         new OrderDetail { Id = 2, OrderId = 1, ProductId = 2, Quantity = 2 }
                 ); ;
+        }
+
+        private void SeedDataSupplier(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Supplier>()
+                        .HasData(
+                             new Supplier{ Id = 1, SupplierName = "Asus Việt Nam", Address = "482 Điện Biên Phủ, Q10, HCM", PhoneNumber = "0967823093", Email = "asusvn@gmail.com" }
+                         );
         }
 
 

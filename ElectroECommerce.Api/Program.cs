@@ -1,3 +1,5 @@
+using AutoMapper;
+using ElectroECommerce.Application.Common.Mappers;
 using ElectroECommerce.Application.Contracts;
 using ElectroECommerce.Application.Implimentations;
 using ElectroECommerce.Application.IRepositories;
@@ -19,6 +21,10 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+var configuration = new MapperConfiguration(cfg => {ModelMapper.MappingDto(cfg); });
+IMapper mapper = configuration.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 

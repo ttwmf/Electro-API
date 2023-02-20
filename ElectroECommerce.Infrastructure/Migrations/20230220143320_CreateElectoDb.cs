@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ElectroECommerce.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateElectroDb : Migration
+    public partial class CreateElectoDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -157,6 +157,7 @@ namespace ElectroECommerce.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderCode = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     ShippingAddres = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShippingCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -375,8 +376,8 @@ namespace ElectroECommerce.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Orders",
-                columns: new[] { "Id", "CreatedAt", "CreatedBy", "CustomerId", "PaymentMethod", "ShippingAddres", "ShippingCost", "Status", "TotalDiscount", "TotalItems", "TotalPrice", "UpdatedAt", "UpdatedBy", "VoucherCode" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, 1, "06 Trần Văn Ơn", 0m, 0, 0m, 3, 335000m, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Free-ship" });
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "CustomerId", "OrderCode", "PaymentMethod", "ShippingAddres", "ShippingCost", "Status", "TotalDiscount", "TotalItems", "TotalPrice", "UpdatedAt", "UpdatedBy", "VoucherCode" },
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, "ABC-123", 1, "06 Trần Văn Ơn", 0m, 0, 0m, 3, 335000m, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Free-ship" });
 
             migrationBuilder.InsertData(
                 table: "Products",
@@ -425,6 +426,13 @@ namespace ElectroECommerce.Infrastructure.Migrations
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_OrderCode",
+                table: "Orders",
+                column: "OrderCode",
+                unique: true,
+                filter: "[OrderCode] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_SpecificationsId",
