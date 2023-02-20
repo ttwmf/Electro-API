@@ -1,24 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ElectroECommerce.Domain
+﻿namespace ElectroECommerce.Domain
 {
     public class PromotionDetail : BaseEntity
     {
+        public int PromotionId { get; set; }
+        public int ProductId { get; set; }
+        public decimal? DiscountPrice { get; set; }
+        public double? DiscountPercent { get; set; }
+        public int DiscountType { get; set; }
+
         public Product Product { get; set; }
-
-        /// <summary>
-        /// Promotion Type ( 1 = %, 2 = concrete, 3 = gift) 
-        /// </summary>
-        public int Type { get; set; }
-
-        public decimal DiscountPrice { get; set; }
-
-        public int? Percent { get; set; }
-
-        public decimal Descrease { get; set; }
     }
 }

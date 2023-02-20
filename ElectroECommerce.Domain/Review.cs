@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace ElectroECommerce.Domain
 {
-    public class Comment : BaseEntity
+    public class Review : BaseEntity
     {
-        public string Content { get; set; }
         public int ProductId { get; set; }
+        public int CustomerId { get; set; }
+        public string Title { get; set; }
+        public string Comment { get; set; }
+        public int RatingPoint { get; set; }
+
+        public Product Product { get; set; }
         public Customer Customer { get; set; }
-        public int Rating { get; set; }
     }
 }

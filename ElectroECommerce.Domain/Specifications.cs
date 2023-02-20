@@ -9,15 +9,10 @@ namespace ElectroECommerce.Domain
     public class Specifications : BaseEntity 
     {
         public string CPU { get; set; }
-        public int RAM { get; set; }
-
-        public int Storage { get; set; }
-        public double MonitorSize { get; set; }
-
-        public double Weight { get; set; }
-
+        public string RAM { get; set; }
         public string VGA { get; set; }
-
-
+        public string Storage { get; set; }
+        public string MonitorSize { get; set; }
+        public string Weight { get; set; }
     }
 }
