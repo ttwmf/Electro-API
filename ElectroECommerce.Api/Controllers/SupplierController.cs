@@ -1,4 +1,5 @@
 ﻿using ElectroECommerce.Application.Contracts;
+using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace ElectroECommerce.Api.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<Supplier>> CreateAsync(Supplier supplier)
+        public async Task<ActionResult<Supplier>> CreateAsync(CreateSupplierRequest supplier)
         {
             var result = await _supplierService.CreateSupplierAsync(supplier);
             return Ok(result);

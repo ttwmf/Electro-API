@@ -1,4 +1,5 @@
-﻿using ElectroECommerce.Domain;
+﻿using ElectroECommerce.Application.Models.Request;
+using ElectroECommerce.Domain;
 
 namespace ElectroECommerce.Application.Contracts
 {
@@ -10,7 +11,7 @@ namespace ElectroECommerce.Application.Contracts
 
         Task<Supplier> UpdateSupplierAsync(Supplier product);
 
-        Task<Supplier> CreateSupplierAsync(Supplier product);
+        Task<Supplier> CreateSupplierAsync(CreateSupplierRequest product);
 
         Task DeleteSupplierAsync(int id);
     }
