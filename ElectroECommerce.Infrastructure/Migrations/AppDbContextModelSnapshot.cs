@@ -183,6 +183,9 @@ namespace ElectroECommerce.Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("OrderCode")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
@@ -217,6 +220,10 @@ namespace ElectroECommerce.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
+                    b.HasIndex("OrderCode")
+                        .IsUnique()
+                        .HasFilter("[OrderCode] IS NOT NULL");
+
                     b.ToTable("Orders");
 
                     b.HasData(
@@ -225,6 +232,7 @@ namespace ElectroECommerce.Infrastructure.Migrations
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerId = 1,
+                            OrderCode = "ABC-123",
                             PaymentMethod = 1,
                             ShippingAddres = "06 Trần Văn Ơn",
                             ShippingCost = 0m,

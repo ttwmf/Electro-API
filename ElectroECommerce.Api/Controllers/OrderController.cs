@@ -1,5 +1,5 @@
 ﻿using ElectroECommerce.Application.Contracts;
-using ElectroECommerce.Domain;
+using ElectroECommerce.Application.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElectroECommerce.Api.Controllers
@@ -16,7 +16,7 @@ namespace ElectroECommerce.Api.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<ActionResult<Order>> GetOrderByIdAsync(int id)
+        public async Task<ActionResult<DtoOrder>> GetOrderByIdAsync(int id)
         {
             var result = await _orderService.GetOrderByIdAsync(id);
             return Ok(result);
