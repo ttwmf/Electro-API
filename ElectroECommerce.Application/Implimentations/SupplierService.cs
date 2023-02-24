@@ -1,4 +1,5 @@
-﻿using ElectroECommerce.Application.Contracts;
+﻿using AutoMapper;
+using ElectroECommerce.Application.Contracts;
 using ElectroECommerce.Application.IRepositories;
 using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
@@ -8,28 +9,19 @@ namespace ElectroECommerce.Application.Implimentations
     public class SupplierService : ISupplierService
     {
         private readonly ISupplierRepository _supplierRepository;
-        public SupplierService(ISupplierRepository supplierRepository)
+        private readonly IMapper _mapper;
+        public SupplierService(ISupplierRepository supplierRepository, IMapper mapper)
         {
             _supplierRepository = supplierRepository;
+            _mapper = mapper;
         }
         public async Task<Supplier> CreateSupplierAsync(CreateSupplierRequest supplier)
         {
-            var newSupplier = new Supplier()
-            {
-                Address = supplier.Address,
-                PhoneNumber = supplier.PhoneNumber,
-                SupplierName = supplier.SupplierName,
-                Email = supplier.Email,
+            var newSupplier = _mapper.Map<CreateSupplierRequest, Supplier>(supplier);
 
-                //TODO 
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.Now,
-                CreatedBy = "Thai",
-                Status = 0
-            };
             return await _supplierRepository.CreateAsync(newSupplier);
         }
-
+        
         public async Task DeleteSupplierAsync(int id)
         {
             var supplier = await _supplierRepository.GetAsync(id);
@@ -49,10 +41,16 @@ namespace ElectroECommerce.Application.Implimentations
             return await _supplierRepository.GetAllAsync();
         }
 
-        public async Task<Supplier> UpdateSupplierAsync(Supplier supplier)
+        public async Task<Supplier> UpdateSupplierAsync(int id, UpdateSupplierRequest updateSupplierRequest)
         {
-
-            return await _supplierRepository.UpdateAsync(supplier);
+            var updateSupplier = await _supplierRepository.GetAsync(id);
+            if (updateSupplier != null)
+            {
+                updateSupplier.PhoneNumber = updateSupplierRequest.PhoneNumber;
+                updateSupplier.Address = updateSupplierRequest.Address;
+                updateSupplier.Email = updateSupplierRequest.Email;
+            }
+            return await _supplierRepository.UpdateAsync(updateSupplier);
         }
     }
 }

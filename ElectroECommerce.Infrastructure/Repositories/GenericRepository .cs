@@ -47,9 +47,11 @@ namespace ElectroECommerce.Infrastructure.Repositories
             return await _entity.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public virtual Task<T> UpdateAsync(T entity)
+        public virtual async Task<T> UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            _entity.Update(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
         public async Task SaveAsync()

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ElectroECommerce.Application.Models.Dtos;
+using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
 
 namespace ElectroECommerce.Application.Common.Mappers
@@ -14,6 +15,9 @@ namespace ElectroECommerce.Application.Common.Mappers
             cfg.CreateMap<OrderDetail, DtoOrderDetail>();
             cfg.CreateMap<Customer, DtoCustomer>();
             cfg.CreateMap<Order, DtoOrder>();
+
+            cfg.CreateMap<CreateSupplierRequest, Supplier>();
+                
         }
     }
 }

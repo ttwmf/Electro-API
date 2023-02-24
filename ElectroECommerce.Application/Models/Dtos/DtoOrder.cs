@@ -4,7 +4,7 @@
     {
         public string OrderCode { get; set; }
         public int CustomerId { get; set; }
-        public string ShippingAddres { get; set; }
+        public string ShippingAddress { get; set; }
         public decimal ShippingCost { get; set; }
         public int PaymentMethod { get; set; }
         public int TotalItems { get; set; }
