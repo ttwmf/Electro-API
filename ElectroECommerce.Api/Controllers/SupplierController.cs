@@ -17,9 +17,17 @@ namespace ElectroECommerce.Api.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<Supplier>> CreateAsync(CreateSupplierRequest supplier)
+        public async Task<ActionResult<Supplier>> CreateSupplierAsync(CreateSupplierRequest supplier)
         {
             var result = await _supplierService.CreateSupplierAsync(supplier);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        [Route("{id:int}")]
+        public async Task<ActionResult<Supplier>> UpdateSupplierAsync(int id, UpdateSupplierRequest updateSupplierRequest)
+        {
+            var result = await _supplierService.UpdateSupplierAsync(id, updateSupplierRequest);
             return Ok(result);
         }
 

@@ -9,7 +9,7 @@ namespace ElectroECommerce.Application.Contracts
 
         Task<Supplier> GetSupplierByIdAsync(int id);
 
-        Task<Supplier> UpdateSupplierAsync(Supplier product);
+        Task<Supplier> UpdateSupplierAsync(int id, UpdateSupplierRequest updateSupplierRequest);
 
         Task<Supplier> CreateSupplierAsync(CreateSupplierRequest product);
 
