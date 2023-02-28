@@ -1,5 +1,7 @@
-﻿using ElectroECommerce.Application.Contracts;
+﻿using AutoMapper;
+using ElectroECommerce.Application.Contracts;
 using ElectroECommerce.Application.IRepositories;
+using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
 
 namespace ElectroECommerce.Application.Implimentations
@@ -7,18 +9,18 @@ namespace ElectroECommerce.Application.Implimentations
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
-        public CustomerService (ICustomerRepository customerRepository)
+        private readonly IMapper _mapper;
+        public CustomerService(ICustomerRepository customerRepository, IMapper mapper)
         {
-            _customerRepository = customerRepository;  
+            _customerRepository = customerRepository;
+            _mapper = mapper;
         }
 
-        public async Task<Customer> CreateCustomerAsync(Customer customer)
+        public async Task<Customer> CreateCustomerAsync(CreateCustomerRequest customer)
         {
-            if (customer == null)
-            {
-                return null;
-            }
-            return await _customerRepository.CreateAsync(customer);
+            var newCustomer = _mapper.Map<CreateCustomerRequest, Customer>(customer);
+
+            return await _customerRepository.CreateAsync(newCustomer);
         }
 
         public async Task DeleteCustomerAsync(int id)
@@ -40,23 +42,19 @@ namespace ElectroECommerce.Application.Implimentations
             return await _customerRepository.GetAllAsync();
         }
 
-        public async Task<Customer> UpdateCustomerAsync(Customer customer)
+        public async Task<Customer> UpdateCustomerAsync(int id, UpdateCustomerRequest updateCustomerRequest)
         {
-            if (customer != null)
+            var updateCustomer = await _customerRepository.GetAsync(id);
+            if (updateCustomer != null)
             {
-                var customerUpdate = await GetCustomerByIdAsync(customer.Id);
-                if (customerUpdate != null)
-                {
-                    customerUpdate.CustomerName = customer.CustomerName;
-                    customerUpdate.PhoneNumber = customer.PhoneNumber;
-                    customerUpdate.CreatedBy = customer.CreatedBy;
-                    customerUpdate.UpdatedBy = customer.UpdatedBy;
-                    customerUpdate.Email = customer.Email;
-                    customerUpdate.Status= customer.Status;
-                    return await _customerRepository.UpdateAsync(customerUpdate);
-                }
+                updateCustomer.PhoneNumber = updateCustomerRequest.PhoneNumber;
+                updateCustomer.Address = updateCustomerRequest.Address;
+                updateCustomer.Email = updateCustomerRequest.Email;
+                updateCustomer.Username = updateCustomerRequest.Username;
+                updateCustomer.password = updateCustomerRequest.password;
+
             }
-            return null;
+            return await _customerRepository.UpdateAsync(updateCustomer);
         }
     }
 }

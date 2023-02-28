@@ -17,7 +17,8 @@ namespace ElectroECommerce.Application.Common.Mappers
             cfg.CreateMap<Order, DtoOrder>();
 
             cfg.CreateMap<CreateSupplierRequest, Supplier>();
-                
+            cfg.CreateMap<CreateCustomerRequest, Customer>();
+
         }
     }
 }
