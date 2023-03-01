@@ -1,4 +1,5 @@
-﻿using ElectroECommerce.Domain;
+﻿using ElectroECommerce.Application.Models.Request;
+using ElectroECommerce.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,9 @@ namespace ElectroECommerce.Application.Contracts
 
         Task<Customer> GetCustomerByIdAsync(int id);
 
-        Task<Customer> UpdateCustomerAsync(Customer customer);
+        Task<Customer> UpdateCustomerAsync(int id, UpdateCustomerRequest updateCustomerRequest);
 
-        Task<Customer> CreateCustomerAsync(Customer customer);
+        Task<Customer> CreateCustomerAsync(CreateCustomerRequest product);
 
         Task DeleteCustomerAsync(int id);
     }
