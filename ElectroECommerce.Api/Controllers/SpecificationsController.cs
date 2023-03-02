@@ -1,4 +1,5 @@
 ﻿using ElectroECommerce.Application.Contracts;
+using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,7 +40,7 @@ namespace ElectroECommerce.Api.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<Specifications>> CreateSpecificationsAsync(Specifications specifications)
+        public async Task<ActionResult<Specifications>> CreateSpecificationsAsync(CreateSpecificationsRequest specifications)
         {
             try
             {
@@ -56,7 +57,7 @@ namespace ElectroECommerce.Api.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult<Specifications>> UpdateSpecificationsAsync(int id, Specifications specifications)
+        public async Task<ActionResult<Specifications>> UpdateSpecificationsAsync(int id, UpdateSpecificationsRequest updateSpecificationslRequest)
         {
             try
             {
@@ -67,8 +68,7 @@ namespace ElectroECommerce.Api.Controllers
                 }
                 else
                 {
-                    specifications.Id = specIsvalid.Id;
-                    var result = await _specificationsService.UpdateSpecificationsAsync(specifications);
+                    var result = await _specificationsService.UpdateSpecificationsAsync(id, updateSpecificationslRequest);
                     return Ok(result);
                 }
 

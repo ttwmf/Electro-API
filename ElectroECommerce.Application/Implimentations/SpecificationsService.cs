@@ -1,5 +1,7 @@
-﻿using ElectroECommerce.Application.Contracts;
+﻿using AutoMapper;
+using ElectroECommerce.Application.Contracts;
 using ElectroECommerce.Application.IRepositories;
+using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
 
 namespace ElectroECommerce.Application.Implimentations
@@ -7,47 +9,40 @@ namespace ElectroECommerce.Application.Implimentations
     public class SpecificationsService : ISpecificationsService
     {
         private readonly ISpecificationsRepository _specificationsRepository;
-        public SpecificationsService(ISpecificationsRepository specificationsRepository)
+        private readonly IMapper _mapper;
+        public SpecificationsService(ISpecificationsRepository specificationsRepository, IMapper mapper)
         {
             _specificationsRepository = specificationsRepository;
+            _mapper = mapper;
         }
         public async Task<Specifications> GetSpecificationsByIdAsync(int id)
         {
             return await _specificationsRepository.GetAsync(id);
         }
 
-        public async Task<Specifications> UpdateSpecificationsAsync(Specifications specifications)
+        public async Task<Specifications> UpdateSpecificationsAsync(int id, UpdateSpecificationsRequest updateSpecificationslRequest)
         {
-            if (specifications != null)
+            var updateSpecifications = await _specificationsRepository.GetAsync(id);
+            if (updateSpecifications != null)
             {
-                var specUpdate = await GetSpecificationsByIdAsync(specifications.Id);
-                if (specUpdate != null)
-                {
-                    specUpdate.CPU = specifications.CPU;
-                    specUpdate.RAM = specifications.RAM;
-                    specUpdate.Storage = specifications.Storage;
-                    specUpdate.MonitorSize = specifications.MonitorSize;
-                    specUpdate.Weight = specifications.Weight;
-                    specUpdate.VGA = specifications.VGA;
-                    specUpdate.CreatedBy = specifications.CreatedBy;
-                    specUpdate.UpdatedBy = specifications.UpdatedBy;
-                    specUpdate.Status = specifications.Status;
-                    return await _specificationsRepository.UpdateAsync(specUpdate);
-                }
+                updateSpecifications.Weight = updateSpecificationslRequest.Weight;
+                updateSpecifications.MonitorSize = updateSpecificationslRequest.MonitorSize;
+                updateSpecifications.Storage = updateSpecificationslRequest.Storage;
+                updateSpecifications.VGA = updateSpecificationslRequest.VGA;
+                updateSpecifications.RAM = updateSpecificationslRequest.RAM;
+                updateSpecifications.CPU = updateSpecificationslRequest.CPU;
             }
-            return null;
+            return await _specificationsRepository.UpdateAsync(updateSpecifications);
         }
 
-        public async Task<Specifications> CreateSpecificationsAsync(Specifications specifications)
+        public async Task<Specifications> CreateSpecificationsAsync(CreateSpecificationsRequest specifications)
         {
-            if (specifications == null)
-            {
-                return null;
-            }
-            return await _specificationsRepository.CreateAsync(specifications);
+            var newSpecifications = _mapper.Map<CreateSpecificationsRequest, Specifications>(specifications);
+
+            return await _specificationsRepository.CreateAsync(newSpecifications);
         }
 
-        public async Task DeleteSpecificationsAsync(int id)
+            public async Task DeleteSpecificationsAsync(int id)
         {
             var specifications = await _specificationsRepository.GetAsync(id);
             if (specifications != null)
