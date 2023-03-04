@@ -1,4 +1,5 @@
-﻿using ElectroECommerce.Domain;
+﻿using ElectroECommerce.Application.Models.Request;
+using ElectroECommerce.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,9 @@ namespace ElectroECommerce.Application.Contracts
 
         Task<Specifications> GetSpecificationsByIdAsync(int id);
 
-        Task<Specifications> UpdateSpecificationsAsync(Specifications specifications);
+        Task<Specifications> UpdateSpecificationsAsync(int id, UpdateSpecificationsRequest updateSpecificationslRequest);
 
-        Task<Specifications> CreateSpecificationsAsync(Specifications specifications);
+        Task<Specifications> CreateSpecificationsAsync(CreateSpecificationsRequest product);
 
         Task DeleteSpecificationsAsync(int id);
     }
