@@ -4,6 +4,7 @@ using ElectroECommerce.Application.Contracts;
 using ElectroECommerce.Application.Implimentations;
 using ElectroECommerce.Application.IRepositories;
 using ElectroECommerce.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["IdentityServerSettings:Authority"];
+        options.Audience = builder.Configuration["IdentityServerSettings:Audience"];
+        options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,6 +57,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
