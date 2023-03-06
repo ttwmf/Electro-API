@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ElectroECommerce.Application.Contracts;
 using ElectroECommerce.Application.IRepositories;
+using ElectroECommerce.Application.Models;
 using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
 
@@ -8,17 +9,21 @@ namespace ElectroECommerce.Application.Implimentations
 {
     public class SupplierService : ISupplierService
     {
+        private readonly ICurrentUserService _curUserService;
         private readonly ISupplierRepository _supplierRepository;
         private readonly IMapper _mapper;
-        public SupplierService(ISupplierRepository supplierRepository, IMapper mapper)
+        public SupplierService(ICurrentUserService currentUserService,
+                               ISupplierRepository supplierRepository,
+                               IMapper mapper)
         {
+            _curUserService = currentUserService;
             _supplierRepository = supplierRepository;
             _mapper = mapper;
         }
         public async Task<Supplier> CreateSupplierAsync(CreateSupplierRequest supplier)
         {
             var newSupplier = _mapper.Map<CreateSupplierRequest, Supplier>(supplier);
-
+            newSupplier.SetCreateInfo(_curUserService.UserName);
             return await _supplierRepository.CreateAsync(newSupplier);
         }
         
@@ -50,6 +55,7 @@ namespace ElectroECommerce.Application.Implimentations
                 updateSupplier.Address = updateSupplierRequest.Address;
                 updateSupplier.Email = updateSupplierRequest.Email;
             }
+            updateSupplier.SetUpdateInfo(_curUserService.UserName);
             return await _supplierRepository.UpdateAsync(updateSupplier);
         }
     }
