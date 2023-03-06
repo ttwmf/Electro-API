@@ -1,5 +1,7 @@
 ﻿using ElectroECommerce.Application.Contracts;
 using ElectroECommerce.Domain;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElectroECommerce.Api.Controllers
@@ -20,8 +22,10 @@ namespace ElectroECommerce.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsAsync()
         {
+            var token = await HttpContext.GetTokenAsync("access_token");
             var result = await _productService.GetProductsAsync();
             return Ok(result);
         }
