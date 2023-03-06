@@ -7,9 +7,11 @@ namespace ElectroECommerce.Application.Implimentations
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productRepository)
+        private readonly ICurrentUserService _currentUserService;
+        public ProductService(IProductRepository productRepository, ICurrentUserService currentUserService)
         {
             _productRepository = productRepository;
+            _currentUserService = currentUserService;
         }
 
         /// <summary>
@@ -18,6 +20,8 @@ namespace ElectroECommerce.Application.Implimentations
         /// <returns></returns>
         public async Task<IEnumerable<Product>> GetProductsAsync()
         {
+            var userName = _currentUserService.UserName;
+
             return await _productRepository.GetAllAsync();
         }
 
