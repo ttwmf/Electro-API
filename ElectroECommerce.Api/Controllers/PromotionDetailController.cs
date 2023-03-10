@@ -1,5 +1,4 @@
 ﻿using ElectroECommerce.Application.Contracts;
-using ElectroECommerce.Application.Implimentations;
 using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ElectroECommerce.Api.Controllers
 {
     [ApiController]
-    [Route("api/promotionDetail")]
+    [Route("api/promotion-detail")]
     public class PromotionDetailController : ControllerBase
     {
         private readonly IPromotionDetailService _promotionDetailService;

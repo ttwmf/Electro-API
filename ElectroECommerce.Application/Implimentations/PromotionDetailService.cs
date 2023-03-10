@@ -1,8 +1,8 @@
-﻿using ElectroECommerce.Application.Contracts;
+﻿using AutoMapper;
+using ElectroECommerce.Application.Contracts;
 using ElectroECommerce.Application.IRepositories;
 using ElectroECommerce.Application.Models.Request;
 using ElectroECommerce.Domain;
-using AutoMapper;
 
 namespace ElectroECommerce.Application.Implimentations
 {
